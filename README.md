@@ -15,6 +15,7 @@
 
 <br/>
 ## build.gradle(추가될 수 있음)
+
 ```gradle
 plugins {
     id 'org.springframework.boot' version '2.6.3'

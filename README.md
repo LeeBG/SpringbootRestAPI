@@ -1,4 +1,4 @@
-# SpringbootRestAPI
+# SpringbootRestAPI 공부
 ## 참고
  * [아빠프로그래머 SpringBoot2로 Rest api 만들기](https://daddyprogrammer.org/post/series/springboot2-make-rest-api/)
 
@@ -14,6 +14,7 @@
 <br/> application.yml에서 따로 잡아줘야한다.
 
 <br/>
+
 ## build.gradle(추가될 수 있음)
 
 ```gradle

@@ -1,7 +1,6 @@
 package com.rest.api.controller.v1;
-
-import com.rest.api.model.User;
 import com.rest.api.Repository.UserJpaRepository;
+import com.rest.api.model.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -9,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @Api(tags = {"1. User"})
 @RequiredArgsConstructor

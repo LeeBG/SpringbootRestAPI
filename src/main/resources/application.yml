@@ -10,5 +10,8 @@ spring:
     username: sa
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    properties.hibernate.hbm2ddl.auto: update
+    properties.hibernate.hbm2ddl.auto: create
     show-sql: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

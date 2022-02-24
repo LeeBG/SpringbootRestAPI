@@ -13,6 +13,13 @@
 ![image](https://user-images.githubusercontent.com/44068819/151173627-42b21178-3c23-4577-8507-c2d81729eee7.png)
 <br/> application.yml에서 따로 잡아줘야한다.
 
+### 3.Swagger2 연동 시 문제해결
+<br/>
+
+#### - 도움을 받은 사이트
+* [Swagger2 연동(버전 2.9.2)](https://inseok9068.github.io/springboot/springboot-swagger/)
+* [오류해결 (application.yml에 추가)](https://www.inflearn.com/questions/230160)
+
 <br/>
 
 ## build.gradle(추가될 수 있음)
@@ -54,3 +61,4 @@ test {
 }
 
 ```
+

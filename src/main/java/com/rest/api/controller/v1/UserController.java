@@ -1,6 +1,7 @@
 package com.rest.api.controller.v1;
 
 import com.rest.api.Repository.UserJpaRepository;
+import com.rest.api.advice.exception.CUserNotFoundException;
 import com.rest.api.model.User;
 import com.rest.api.model.response.CommonResult;
 import com.rest.api.model.response.SingleResult;
@@ -36,10 +37,11 @@ public class UserController {
             @ApiResponse(code = 404, message = "페이지 없음"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    public SingleResult<User> findUserById(@ApiParam(value = "ID로회원검색",required = true)@PathVariable long msrl){
+    public SingleResult<User> findUserById(@ApiParam(value = "ID로회원검색",required = true)@PathVariable long msrl)/*throws Exception*/{
         // 결과 데이터가 단일 건인 경우에는 getBasicResult를 이용해서 결과를 출력한다.
-        return responseService.getSingleResult(userJpaRepository.findById(msrl).orElse(null));
+        return responseService.getSingleResult(userJpaRepository.findById(msrl).orElseThrow(CUserNotFoundException::new));
     }
+
 
     @ApiOperation(value = "User Post 요청", notes = "User Post 요청", response = String.class) // value: 해당 파라미터 명칭, notes : 메소드에 대한 설명란
     @ApiResponses(value = {

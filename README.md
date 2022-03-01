@@ -30,7 +30,6 @@ plugins {
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
-
 group = 'com.rest'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -45,6 +44,11 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    swagger2Version = '2.9.2'
+    oldSwagger2Version = '1.5.21'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-freemarker'
@@ -54,11 +58,26 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    /*--------------------------[ Swagger 2 ]--------------------------------*/
+    // Swagger2 내부 라이브러리 이슈로 인한 Annotatios과 Models 과거 버전으로 사용
+    //implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    implementation("io.springfox:springfox-swagger2:${swagger2Version}") {
+        exclude group: 'io.swagger', module: 'swagger-annotations'
+        exclude group: 'io.swagger', module: 'swagger-models'
+    }
+
+    implementation "io.swagger:swagger-annotations:${oldSwagger2Version}"
+    implementation "io.swagger:swagger-models:${oldSwagger2Version}"
+    /*-----------------------------------------------------------------------*/
 }
 
 test {
     useJUnitPlatform()
 }
+
 
 ```
 

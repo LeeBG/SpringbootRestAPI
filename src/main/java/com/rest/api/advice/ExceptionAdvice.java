@@ -4,12 +4,14 @@ import com.rest.api.advice.exception.CUserNotFoundException;
 import com.rest.api.model.response.CommonResult;
 import com.rest.api.service.ResponseService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,19 +26,27 @@ import javax.servlet.http.HttpServletRequest;
 public class ExceptionAdvice {
 
     private final ResponseService responseService;
+    private final MessageSource messageSource;
 
-//    @ExceptionHandler(Exception.class)//Exception이 발생하면 해당 Handler로 처리하겠다고 명시하는 annotation입니다.
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)//해당 Exception이 발생하면 Response에 출력되는 HttpStatus Code가 500으로 내려가도록 설정합니다.
-//    // 참고로 성공 시엔 HttpStatus code가 200으로 내려갑니다.
-//    protected CommonResult defaultException(HttpRequest request, Exception e){
-//        return responseService.getFailResult();
-//        //Exception 발생시 이미 만들어둔 CommonResult의 실패 결과를 json 형태로 출력하도록 설정합니다.
-//        //위에서 세팅한 HttpStatus Code외에 추가로 api 성공 실패여부를 다시 세팅하는 이유는 상황에 따라 다양한 메시지를 전달하기 위해서 입니다.
-//    }
+    @ExceptionHandler(Exception.class)//Exception이 발생하면 해당 Handler로 처리하겠다고 명시하는 annotation입니다.
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)//해당 Exception이 발생하면 Response에 출력되는 HttpStatus Code가 500으로 내려가도록 설정합니다.
+    protected CommonResult defaultException(HttpServletRequest request, Exception e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("unKnown.code")),getMessage("unKnown.msg"));
+    }
 
     @ExceptionHandler(CUserNotFoundException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e){
-        return responseService.getFailResult();
+        return responseService.getFailResult(Integer.valueOf(getMessage("userNotFound.code")),getMessage("userNotFound.msg"));
     }
+    // code정보에 해당하는 메시지를 조회합니다.
+    private String getMessage(String code){
+        return getMessage(code, null);
+    }
+
+    // code정보, 추가 Argument로 현재 locale에 맏는 메시지를 조회합니다.
+    private String getMessage(String code, Object[] args){
+        return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
+    }
+
 }

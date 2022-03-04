@@ -37,7 +37,7 @@ public class UserController {
             @ApiResponse(code = 404, message = "페이지 없음"),
             @ApiResponse(code = 500, message = "서버 에러")
     })
-    public SingleResult<User> findUserById(@ApiParam(value = "ID로회원검색",required = true)@PathVariable long msrl)/*throws Exception*/{
+    public SingleResult<User> findUserById(@ApiParam(value = "ID로회원검색",required = true)@PathVariable long msrl, @ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang)/*throws Exception*/{
         // 결과 데이터가 단일 건인 경우에는 getBasicResult를 이용해서 결과를 출력한다.
         return responseService.getSingleResult(userJpaRepository.findById(msrl).orElseThrow(CUserNotFoundException::new));
     }

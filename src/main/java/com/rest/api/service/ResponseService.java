@@ -55,9 +55,11 @@ public class ResponseService{
         }
 
         // 실패결과만 처리하는 메소드
-        public CommonResult getFailResult(){
+        public CommonResult getFailResult(int code,String msg){
             CommonResult result = new CommonResult();
-            setSuccessResult(result);
+            result.setSuccess(false);
+            result.setCode(code);
+            result.setMsg(msg);
             return result;
         }
         // 결과 모델에 api 요청 성공 데이터를 세팅해주는 메소드

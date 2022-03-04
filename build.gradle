@@ -45,6 +45,9 @@ dependencies {
     implementation "io.swagger:swagger-annotations:${oldSwagger2Version}"
     implementation "io.swagger:swagger-models:${oldSwagger2Version}"
     /*-----------------------------------------------------------------------*/
+
+    /*-----------------message properties를 yml로 작성하기 위한 라이브러리 추가------------------*/
+    implementation 'net.rakugakibox.util:yaml-resource-bundle:1.1'
 }
 
 test {

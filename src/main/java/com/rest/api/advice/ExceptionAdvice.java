@@ -1,5 +1,6 @@
 package com.rest.api.advice;
 
+import com.rest.api.advice.exception.CEmailSigninFailedException;
 import com.rest.api.advice.exception.CUserNotFoundException;
 import com.rest.api.model.response.CommonResult;
 import com.rest.api.service.ResponseService;
@@ -49,4 +50,9 @@ public class ExceptionAdvice {
         return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
     }
 
+    @ExceptionHandler(CEmailSigninFailedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult emailSigninFailed(HttpServletRequest request, CEmailSigninFailedException e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("emailSigninFailed.code")),getMessage("emailSigninFailed.msg"));
+    }
 }

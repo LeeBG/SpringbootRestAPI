@@ -23,7 +23,7 @@ import java.util.List;
 public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
 
     @Value("spring.jwt.secret")//비밀키
-    private String secretyKey;
+    private String secretKey;
 
     private long tokenValidMilisecond = 1000L * 60 * 60; //토큰 유효 시간을 한시간으로 지정
 
@@ -31,7 +31,7 @@ public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
 
     @PostConstruct
     protected void init(){
-        secretyKey = Base64.getEncoder().encodeToString(secretyKey.getBytes());
+        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
     //JWT 토큰 생성
@@ -43,7 +43,7 @@ public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
                 .setClaims(claims) // 데이터
                 .setIssuedAt(now) // 토큰 발행일자
                 .setExpiration(new Date(now.getTime()+tokenValidMilisecond))// 토큰 만료 시간 설정
-                .signWith(SignatureAlgorithm.HS256,secretyKey) // 암호화 알고리즘
+                .signWith(SignatureAlgorithm.HS256,secretKey) // 암호화 알고리즘
                 .compact();
     }
     //JWT토큰에서 인증 정보를 추출
@@ -54,7 +54,7 @@ public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
 
     //JWT토큰에서 회원 구별 정보를 추출
     public String getUserPk(String token){
-        return Jwts.parser().setSigningKey(secretyKey).parseClaimsJwt(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
@@ -65,8 +65,8 @@ public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
     // JWT토큰의 유효성 만료일자 확인
     public boolean validateToken(String jwtToken){
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretyKey).parseClaimsJws(jwtToken);
-            return claims.getBody().getExpiration().before(new Date());
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            return !claims.getBody().getExpiration().before(new Date());
         }catch (Exception e){
             return false;
         }

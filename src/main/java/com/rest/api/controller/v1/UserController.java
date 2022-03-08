@@ -9,10 +9,13 @@ import com.rest.api.model.response.SingleResult;
 import com.rest.api.service.ResponseService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+@PreAuthorize("hasRole('ROLE_USER')")
 @Api(tags = {"2. User"})
 @RequiredArgsConstructor
 @RestController
@@ -22,6 +25,7 @@ public class UserController {
     private final UserJpaRepository userJpaRepository;
     private final ResponseService responseService; // 결과를 처리할 Service
 
+//    @Secured("ROLE_USER")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
@@ -31,7 +35,7 @@ public class UserController {
         // 결과데이터가 여러건인경우 getListResult를 이용해서 결과를 출력한다.
         return responseService.getListResult(userJpaRepository.findAll());
     }
-
+    //    @PreAuthorize("hasRole('ROLE_USER')")     //클래스 위의 PreAuthorize() 대신에 각각의 리소스마다 세팅도 가능하다
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header")
     })

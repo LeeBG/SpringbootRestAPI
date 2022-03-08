@@ -1,6 +1,10 @@
 server:
   port: 8080
 spring:
+  devtools:
+    remote:
+      restart:
+        enabled: true
   freemarker:
     template-loader-path: classpath:/templates
     suffix: .ftl

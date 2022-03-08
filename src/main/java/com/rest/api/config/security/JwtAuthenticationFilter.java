@@ -8,6 +8,10 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/*
+    Jwt가 유효한 토큰인지 인증하기 위한 Filter
+    Security설정 시 UsernamePasswordAuthenticationFilter앞에 세팅할 것이다.
+ */
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private JwtTokenProvider jwtTokenProvider;

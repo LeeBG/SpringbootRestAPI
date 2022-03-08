@@ -22,6 +22,16 @@
 
 <br/>
 
+## Spring Security 동작
+[![image](https://user-images.githubusercontent.com/44068819/157191650-8c52e892-abb3-454f-b4b0-7b9520b594cc.png)](https://daddyprogrammer.org/post/636/springboot2-springsecurity-authentication-authorization/)
+<center>(이미지 클릭 시 참고 사이트 연결)</center>
+<br/>
+- 스프링에서는 인증 및 권한 부여를 통해 리소스의 사용을 쉽게 컨트롤 할 수 있는 SpringSecurityFramework를
+  제공하고 있습니다. Springboot기반의 프로젝트에 SpringSecurity를 적용하면 보안 관련 처리를 자체적으로 
+  구현할 필요 없이 쉽게 필요한 기능을 구현할 수 있습니다. 간략하게 위의 그림처럼 SpringSecurity는 Spring의
+  앞단에 Filter를 등록시켜 요청을 가로챕니다. 클라이언트에게 리소스 접근 권한이 없을 경우에는 인증(로그인)
+  화면으로 자동 리다이렉트 합니다.
+  
 ## build.gradle(추가될 수 있음)
 
 ```gradle

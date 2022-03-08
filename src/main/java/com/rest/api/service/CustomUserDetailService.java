@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+//토큰에 세팅된 User정보로 회원 정보를 조회하는 UserDetailsService를 재정의 할 것이다.
 @RequiredArgsConstructor
 @Service
 public class CustomUserDetailService implements UserDetailsService {

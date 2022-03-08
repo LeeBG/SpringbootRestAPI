@@ -36,7 +36,7 @@ public class JwtTokenProvider {//JWT토큰을 생성 및 검증 모듈
 
     //JWT 토큰 생성
     public String createToken(String userPk, List<String> roles){
-        Claims claims = Jwts.claims().setSubject(userPk);
+        Claims claims = Jwts.claims().setSubject(userPk);//토큰에 부가적으로 실어보낼 정보를 세팅할 수 있다.
         claims.put("roles",roles);
         Date now = new Date();
         return Jwts.builder()

@@ -24,3 +24,14 @@ spring:
     encoding: UTF-8
   jwt:
     secret: govlepel@$&
+  # kakao api와 연동하기 위한 설정정보를 application.yml에 추가합니다.
+  social:
+    kakao:
+      client_id: e319b9ae9d73776f05c39978c66fcef6 # 앱생성시 받은 REST API 키
+      redirect: /social/login/kakao
+      url:
+        login: https://kauth.kakao.com/oauth/authorize
+        token: https://kauth.kakao.com/oauth/token
+        profile: https://kapi.kakao.com/v2/user/me
+  url:
+    base: http://localhost:8080

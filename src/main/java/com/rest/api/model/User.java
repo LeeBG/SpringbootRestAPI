@@ -23,15 +23,18 @@ public class User implements UserDetails {  //SpringSecurity의 보안을 적용
     @GeneratedValue(strategy = GenerationType.IDENTITY)// pk생성 전략을 DB에 위임한다는 의미입니다. mysql로 보면 pk필드를 auto_increasement로 설정한것과 같다.
     private long msrl;
 
-    @Column (nullable = false, unique = true, length = 30) //uid column을 명시합니다. 필수이며 유니크한 필드 길이는 30
+    @Column (nullable = false, unique = true, length = 50) //uid column을 명시합니다. 필수이며 유니크한 필드 길이는 30
     private String uid;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false,length = 100)
+    @Column(length = 100)
     private String password;
 
     @Column(nullable = false, length = 100) // name column을 명시합니다. 필수이며 길이는 100이다.
     private String name;
+
+    @Column(length = 100)
+    private String provider;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default

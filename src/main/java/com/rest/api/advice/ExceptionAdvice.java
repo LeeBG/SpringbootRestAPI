@@ -1,8 +1,6 @@
 package com.rest.api.advice;
 
-import com.rest.api.advice.exception.CAuthenticationEntryPointException;
-import com.rest.api.advice.exception.CEmailSigninFailedException;
-import com.rest.api.advice.exception.CUserNotFoundException;
+import com.rest.api.advice.exception.*;
 import com.rest.api.model.response.CommonResult;
 import com.rest.api.service.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +29,16 @@ public class ExceptionAdvice {
     private final ResponseService responseService;
     private final MessageSource messageSource;
 
+    // code정보에 해당하는 메시지를 조회합니다.
+    private String getMessage(String code){
+        return getMessage(code, null);
+    }
+
+    // code정보, 추가 Argument로 현재 locale에 맏는 메시지를 조회합니다.
+    private String getMessage(String code, Object[] args){
+        return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
+    }
+
     @ExceptionHandler(Exception.class)//Exception이 발생하면 해당 Handler로 처리하겠다고 명시하는 annotation입니다.
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)//해당 Exception이 발생하면 Response에 출력되는 HttpStatus Code가 500으로 내려가도록 설정합니다.
     protected CommonResult defaultException(HttpServletRequest request, Exception e){
@@ -41,15 +49,6 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult userNotFoundException(HttpServletRequest request, CUserNotFoundException e){
         return responseService.getFailResult(Integer.valueOf(getMessage("userNotFound.code")),getMessage("userNotFound.msg"));
-    }
-    // code정보에 해당하는 메시지를 조회합니다.
-    private String getMessage(String code){
-        return getMessage(code, null);
-    }
-
-    // code정보, 추가 Argument로 현재 locale에 맏는 메시지를 조회합니다.
-    private String getMessage(String code, Object[] args){
-        return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
     }
 
     @ExceptionHandler(CEmailSigninFailedException.class)
@@ -68,4 +67,17 @@ public class ExceptionAdvice {
     protected CommonResult accessDeniedException(HttpServletRequest request, AccessDeniedException e){
         return responseService.getFailResult(Integer.valueOf(getMessage("accessDenied.code")),getMessage("accessDenied.msg"));
     }
+
+    @ExceptionHandler(CCommunicationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult communicationException(HttpServletRequest request,CCommunicationException e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("communicationError.code")),getMessage("communicationError.msg"));
+    }
+
+    @ExceptionHandler(CUserExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult communicationException(HttpServletRequest request, CUserExistException e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("existingUser.code")),getMessage("existingUser.msg"));
+    }
+
 }

@@ -17,13 +17,13 @@ public class SwaggerConfiguration {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
                 .select()
                 //.apis(RequestHandlerSelectors.any()) // 모든 RequestMapping URI 추출
                 //.paths(PathSelectors.ant("/v2/**")) // 경로 패턴 URI만 추출
                 .apis(RequestHandlerSelectors.basePackage("com.rest.api.controller")) // 패키지 기준 추출
                 .paths(PathSelectors.any())
                 .build()
-                .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false); // Response 응답 메시지 디폴트값 적용 X
     }
 

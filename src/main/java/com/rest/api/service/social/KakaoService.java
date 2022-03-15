@@ -13,6 +13,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+
 @RequiredArgsConstructor
 @Service
 public class KakaoService {
@@ -30,11 +31,11 @@ public class KakaoService {
     @Value("${spring.social.kakao.redirect}")
     private String kakaoRedirect;
 
-    public KakaoProfile getKakaoProfile(String accessToken) {
+    public KakaoProfile getKakaoProfile(String access_token) {
         // Set header : Content-type: application/x-www-form-urlencoded
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.set("Authorization", "Bearer " + accessToken);
+        headers.set("Authorization", "Bearer " + access_token);
 
         // Set http entity
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(null, headers);
@@ -48,7 +49,6 @@ public class KakaoService {
         }
         throw new CCommunicationException();
     }
-
     public RetKakaoAuth getKakaoTokenInfo(String code) {
         // Set header : Content-type: application/x-www-form-urlencoded
         HttpHeaders headers = new HttpHeaders();

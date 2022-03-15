@@ -4,6 +4,7 @@ public class CAuthenticationEntryPointException extends RuntimeException {
     public CAuthenticationEntryPointException() {
         super();
     }
+
     public CAuthenticationEntryPointException(String msg) {
         super(msg);
     }

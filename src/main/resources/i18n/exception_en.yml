@@ -20,7 +20,7 @@ accessDenied:
 
 communicationError:
   code: "-1004"
-  msg: "An error occured during communication"
+  msg: "An error occurred during communication."
 
 existingUser:
   code: "-1005"

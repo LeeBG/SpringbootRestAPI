@@ -6,13 +6,11 @@ import com.rest.api.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,16 +26,6 @@ public class ExceptionAdvice {
 
     private final ResponseService responseService;
     private final MessageSource messageSource;
-
-    // code정보에 해당하는 메시지를 조회합니다.
-    private String getMessage(String code){
-        return getMessage(code, null);
-    }
-
-    // code정보, 추가 Argument로 현재 locale에 맏는 메시지를 조회합니다.
-    private String getMessage(String code, Object[] args){
-        return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
-    }
 
     @ExceptionHandler(Exception.class)//Exception이 발생하면 해당 Handler로 처리하겠다고 명시하는 annotation입니다.
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)//해당 Exception이 발생하면 Response에 출력되는 HttpStatus Code가 500으로 내려가도록 설정합니다.
@@ -64,20 +52,30 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected CommonResult accessDeniedException(HttpServletRequest request, AccessDeniedException e){
         return responseService.getFailResult(Integer.valueOf(getMessage("accessDenied.code")),getMessage("accessDenied.msg"));
     }
 
     @ExceptionHandler(CCommunicationException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult communicationException(HttpServletRequest request,CCommunicationException e){
-        return responseService.getFailResult(Integer.valueOf(getMessage("communicationError.code")),getMessage("communicationError.msg"));
+    public CommonResult communicationException(HttpServletRequest request, CCommunicationException e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("communicationError.code")), getMessage("communicationError.msg"));
     }
 
     @ExceptionHandler(CUserExistException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected CommonResult communicationException(HttpServletRequest request, CUserExistException e){
-        return responseService.getFailResult(Integer.valueOf(getMessage("existingUser.code")),getMessage("existingUser.msg"));
+    public CommonResult communicationException(HttpServletRequest request, CUserExistException e){
+        return responseService.getFailResult(Integer.valueOf(getMessage("existingUser.code")), getMessage("existingUser.msg"));
     }
 
+    // code정보에 해당하는 메시지를 조회합니다.
+    private String getMessage(String code){
+        return getMessage(code, null);
+    }
+
+    // code정보, 추가 Argument로 현재 locale에 맏는 메시지를 조회합니다.
+    private String getMessage(String code, Object[] args){
+        return messageSource.getMessage(code,args, LocaleContextHolder.getLocale());
+    }
 }

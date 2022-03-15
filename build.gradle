@@ -58,10 +58,8 @@ dependencies {
     /*--------------Spring Security 별도의 test 라이브러리 추가--------------*/
     testImplementation 'org.springframework.security:spring-security-test'
 
-    /*------------카카오 연동시 결과 Json을 객체로 매핑하기 위해 Gson라이브러리 추가------------*/
     implementation 'com.google.code.gson:gson'
 }
-
 
 test {
     useJUnitPlatform()

@@ -21,7 +21,7 @@ accessDenied:
 
 communicationError:
   code: "-1004"
-  msg: "통신 중 오류가 발생했습니다."
+  msg: "통신 중 오류가 발생하였습니다."
 
 existingUser:
   code: "-1005"

@@ -9,7 +9,7 @@ logging:
 spring:
   profiles: alpha
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/leebg?useUnicode=true&autoReconnect=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://44.231.188.215:3306/leebg?useUnicode=true&autoReconnect=true&characterEncoding=utf8&allowMultiQueries=true&useSSL=false
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: leebg
     password: 1234

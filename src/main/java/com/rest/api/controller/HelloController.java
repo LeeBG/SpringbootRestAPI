@@ -32,4 +32,11 @@ public class HelloController {
     private static class Hello{
         private String message;
     }
+    @GetMapping("/helloworld/long-process")
+    @ResponseBody
+    public String pause() throws InterruptedException {
+        Thread.sleep(10000);
+        return "Process finished";
+    }
+
 }

@@ -21,6 +21,6 @@ spring:
     show-sql: true
     generate-ddl: false
   url:
-    base: http://alpha.daddyprogrammer.org
+    base: http://localhost:8083
 
 

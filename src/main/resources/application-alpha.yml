@@ -21,6 +21,6 @@ spring:
     show-sql: true
     generate-ddl: false
   url:
-    base: http://localhost:8083
+    base: http://44.231.188.215
 
 
